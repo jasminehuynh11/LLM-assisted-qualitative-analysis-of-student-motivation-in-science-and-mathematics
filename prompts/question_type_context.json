@@ -1,0 +1,8 @@
+{
+  "like_science": "Survey context: the student answered that they like science; this text explains why or elaborates.",
+  "dislike_science": "Survey context: the student answered that they do not like science; this text explains why or elaborates.",
+  "stopped_science": "Survey context: the student answered they do not like science anymore; this text explains why or elaborates.",
+  "like_math": "Survey context: the student answered that they like mathematics; this text explains why or elaborates.",
+  "dislike_math": "Survey context: the student answered that they do not like mathematics; this text explains why or elaborates.",
+  "stopped_math": "Survey context: the student answered they do not like mathematics anymore; this text explains why or elaborates."
+}

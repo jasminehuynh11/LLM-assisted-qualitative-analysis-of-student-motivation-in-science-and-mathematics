@@ -1,0 +1,14 @@
+.env
+.env.local
+.cursor/
+.code_responses.lock
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+venv/
+*.xlsx~
+~$*.xlsx
+
+# Survey data (student text); remove the next line to track data in git
+TestPerformance_Dataset*.xlsx

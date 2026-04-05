@@ -1,0 +1,13 @@
+{
+  "like_science": "Survey context: the student answered that they LIKE science. This response explains WHY they like it. IMPORTANT: this is a positive context — your primary codes should be positive (valuing_positive, mastery_positive, self_beliefs_positive, social_agents_positive, structural_positive). Only assign negative codes if the student explicitly uses negative language within their response.",
+
+  "like_math": "Survey context: the student answered that they LIKE mathematics. This response explains WHY they like it. IMPORTANT: this is a positive context — your primary codes should be positive (valuing_positive, mastery_positive, self_beliefs_positive, social_agents_positive, structural_positive). Only assign negative codes if the student explicitly uses negative language within their response.",
+
+  "dislike_science": "Survey context: the student answered that they do NOT like science. This response explains WHY they dislike it. IMPORTANT: this is a negative context — your primary codes should be negative (valuing_negative, mastery_negative, self_beliefs_negative, social_agents_negative, structural_negative, uncertain_control_negative, failure_avoidance_negative, anxiety_negative). Only assign positive codes if the student explicitly uses positive language.",
+
+  "dislike_math": "Survey context: the student answered that they do NOT like mathematics. This response explains WHY they dislike it. IMPORTANT: this is a negative context — your primary codes should be negative. Only assign positive codes if the student explicitly uses positive language.",
+
+  "stopped_science": "Survey context: the student answered they do NOT like science anymore. This response explains why they stopped liking it. IMPORTANT: this is a negative context — your primary codes should be negative. Only assign positive codes if the student explicitly uses positive language.",
+
+  "stopped_math": "Survey context: the student answered they do NOT like mathematics anymore. This response explains why they stopped liking it. IMPORTANT: this is a negative context — your primary codes should be negative. Only assign positive codes if the student explicitly uses positive language."
+}

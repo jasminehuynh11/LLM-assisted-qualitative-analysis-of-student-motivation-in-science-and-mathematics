@@ -26,7 +26,7 @@ from typing import Any
 import pandas as pd
 from dotenv import load_dotenv
 
-PROMPT_VERSION = "2.0.0"
+PROMPT_VERSION = "3.0.0"
 
 _BASE = Path(__file__).resolve().parent
 _PROMPTS = _BASE / "prompts"
@@ -367,10 +367,11 @@ def main() -> None:
     if "code " in df_input.columns:
         df_input = df_input.rename(columns={"code ": "code_legacy"})
 
-    # Resume from existing output so checkpoints are not lost between runs
+    # Always resume from existing output as the base so rows outside the
+    # current --start/--limit range are never lost. --overwrite only controls
+    # whether already-coded rows *within* the requested range get re-coded.
     if (
         os.path.isfile(output_path)
-        and not args.overwrite
         and not args.dry_run
     ):
         try:

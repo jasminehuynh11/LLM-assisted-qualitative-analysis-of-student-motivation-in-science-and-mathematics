@@ -26,7 +26,7 @@ from typing import Any
 import pandas as pd
 from dotenv import load_dotenv
 
-PROMPT_VERSION = "3.0.0"
+PROMPT_VERSION = "3.1.0"
 
 _BASE = Path(__file__).resolve().parent
 _PROMPTS = _BASE / "prompts"
@@ -135,7 +135,65 @@ def _coerce_to_allowed_code(raw: str) -> str | None:
     return None
 
 
-def normalize_codes(data: dict[str, Any]) -> tuple[list[str], list[int], int, str]:
+_NEGATIVE_QTYPES: frozenset[str] = frozenset(
+    {"dislike_science", "dislike_math", "stopped_science", "stopped_math"}
+)
+_POSITIVE_QTYPES: frozenset[str] = frozenset(
+    {"like_science", "like_math"}
+)
+
+# Bidirectional valence flip map.  Codes with no positive counterpart
+# (failure_avoidance_negative, anxiety_negative, uncertain_control_negative)
+# are intentionally absent — they are never flipped.
+_VALENCE_FLIP: dict[str, str] = {
+    "valuing_positive": "valuing_negative",
+    "valuing_negative": "valuing_positive",
+    "mastery_positive": "mastery_negative",
+    "mastery_negative": "mastery_positive",
+    "self_beliefs_positive": "self_beliefs_negative",
+    "self_beliefs_negative": "self_beliefs_positive",
+    "social_agents_positive": "social_agents_negative",
+    "social_agents_negative": "social_agents_positive",
+    "structural_positive": "structural_negative",
+    "structural_negative": "structural_positive",
+}
+
+
+def enforce_valence(codes: list[str], question_type: str) -> tuple[list[str], bool]:
+    """Flip any code whose valence contradicts the question type.
+
+    Negative question types (dislike_*/stopped_*) must only produce negative
+    codes.  Positive question types (like_*) must only produce positive codes.
+    Codes with no positive counterpart (anxiety, failure_avoidance,
+    uncertain_control) are never flipped — they cannot appear in positive
+    contexts but the model is relied upon not to assign them there.
+
+    Returns (corrected_codes, was_changed).
+    """
+    if question_type not in _NEGATIVE_QTYPES and question_type not in _POSITIVE_QTYPES:
+        return codes, False
+
+    corrected: list[str] = []
+    changed = False
+    for code in codes:
+        if question_type in _NEGATIVE_QTYPES and code.endswith("_positive"):
+            flipped = _VALENCE_FLIP.get(code, code)
+            corrected.append(flipped)
+            changed = True
+        elif question_type in _POSITIVE_QTYPES and code.endswith("_negative"):
+            flipped = _VALENCE_FLIP.get(code, code)
+            # Only flip if a positive counterpart exists
+            if flipped != code:
+                corrected.append(flipped)
+                changed = True
+            else:
+                corrected.append(code)
+        else:
+            corrected.append(code)
+    return corrected, changed
+
+
+def normalize_codes(data: dict[str, Any], question_type: str = "") -> tuple[list[str], list[int], int, str]:
     codes_raw = data.get("codes")
     if not isinstance(codes_raw, list):
         raise ValueError("codes must be a list")
@@ -147,13 +205,13 @@ def normalize_codes(data: dict[str, Any]) -> tuple[list[str], list[int], int, st
         if canon and canon not in codes:
             codes.append(canon)
     if not codes:
-        codes = ["valuing_positive"]
+        fallback = "valuing_negative" if question_type in _NEGATIVE_QTYPES else "valuing_positive"
         conf_all_fb = 25
         rationale_fb = (
             "Fallback: model returned no valid codebook labels (response may be too brief). "
             "Review manually."
         )
-        return [codes[0]], [conf_all_fb], conf_all_fb, rationale_fb
+        return [fallback], [conf_all_fb], conf_all_fb, rationale_fb
 
     conf_all = data.get("confidence_overall")
     if not isinstance(conf_all, int) or not (0 <= conf_all <= 100):
@@ -263,7 +321,10 @@ def code_row(
                 raw = call_gemini(model, user_message, temperature)
             raw_accum = raw
             data = parse_llm_json(raw)
-            codes, conf_per, conf_all, rationale = normalize_codes(data)
+            codes, conf_per, conf_all, rationale = normalize_codes(data, question_type)
+            codes, valence_changed = enforce_valence(codes, question_type)
+            if valence_changed:
+                rationale = f"[valence enforced for {question_type}] " + rationale
             row_out: dict[str, Any] = {
                 "code_1": codes[0] if len(codes) > 0 else "",
                 "code_2": codes[1] if len(codes) > 1 else "",

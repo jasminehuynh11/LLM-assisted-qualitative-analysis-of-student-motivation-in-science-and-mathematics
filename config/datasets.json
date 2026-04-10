@@ -1,0 +1,30 @@
+{
+  "_comment": "Dataset registry. To add a new dataset: drop the .xlsx into data/raw/ and add an entry here. run.py resolves all paths automatically.",
+  "defaults": {
+    "provider": "openai",
+    "model": "gpt-4o",
+    "temperature": 0.2,
+    "checkpoint_every": 25,
+    "sleep": 0.3
+  },
+  "datasets": [
+    {
+      "name": "TestPerformance_Dataset",
+      "description": "Initial training set — used to baseline prompt v2.0.0",
+      "input": "data/raw/TestPerformance_Dataset.xlsx",
+      "output": "data/coded/TestPerformance_Dataset_coded.xlsx",
+      "phase": "training",
+      "prompt_version": "2.0.0",
+      "notes": "Accuracy: 69.2% strict, 97.4% lenient (390 responses)"
+    },
+    {
+      "name": "Refinement_Dataset",
+      "description": "Refinement set — used to develop and validate prompt v3.x",
+      "input": "data/raw/Refinement_Dataset.xlsx",
+      "output": "data/coded/Refinement_Dataset_coded.xlsx",
+      "phase": "refinement",
+      "prompt_version": "3.1.0",
+      "notes": "390 responses, gpt-4o, valence enforcement applied"
+    }
+  ]
+}

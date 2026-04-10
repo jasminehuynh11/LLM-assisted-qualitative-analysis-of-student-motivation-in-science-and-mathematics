@@ -23,9 +23,11 @@ Use **underscore** names in the JSON field `codes` (e.g. `valuing_positive`).
 These are the four most common errors — read carefully before coding:
 
 ### 1. `mastery_positive` vs `valuing_positive`
-- Student says subject is **"interesting / fun / cool / fascinating"** → `valuing_positive` ONLY
-- Student says **"I understand it / I find it easy / it makes sense to me"** → `mastery_positive`
-- ❌ DO NOT apply `mastery_positive` just because a student mentions "learning about" a topic or finds content interesting
+- **"interesting / fun / cool"** alone → `valuing_positive` ONLY
+- **"I understand it / find it easy"** → `mastery_positive`
+- **"I like learning how things work / want to understand things"** → `mastery_positive` (learning goal = mastery orientation)
+- **"broadens my understanding / helps me understand the world"** → `mastery_positive` ✅
+- ❌ DO NOT apply `mastery_positive` for pure enjoyment/interest with no learning or understanding component
 
 ### 2. `self_beliefs` vs `mastery`
 - **"I understand it / find it easy"** → `mastery_positive` (current ability, in the moment)
@@ -48,6 +50,8 @@ These are the four most common errors — read carefully before coding:
 |---|---|---|
 | "interesting / fun / cool" | `valuing_positive` | `mastery_positive` |
 | "I understand it / find it easy" | `mastery_positive` | `self_beliefs_positive` |
+| "I like learning how things work / want to understand" | `mastery_positive` | `valuing_positive` |
+| "broadens my understanding / helps me understand the world" | `mastery_positive` | `valuing_positive` |
 | "I'm good at it / it comes naturally" | `self_beliefs_positive` | `mastery_positive` |
 | "too hard / confusing" | `mastery_negative` | `uncertain_control_negative` |
 | "no matter how hard I try I can't improve" | `uncertain_control_negative` | `mastery_negative` alone |

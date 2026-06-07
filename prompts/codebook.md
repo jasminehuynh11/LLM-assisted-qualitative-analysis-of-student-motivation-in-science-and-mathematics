@@ -1,22 +1,22 @@
-## Allowed codes (JSON output must use these exact strings)
+## Code Definitions
 
 Use **underscore** names in the JSON field `codes` (e.g. `valuing_positive`).
 
-| Human-readable label | JSON code string | Definition |
-| --- | --- | --- |
-| valuing – positive | `valuing_positive` | The student expresses the subject is interesting, enjoyable, fun, or useful/relevant to their life or future. Key signal: emotional appreciation or perceived value of the subject itself. |
-| valuing – negative | `valuing_negative` | The student expresses the subject is boring, unenjoyable, or pointless/irrelevant. Key signal: emotional dislike or perceived lack of worth. |
-| social agents – positive | `social_agents_positive` | The student credits a teacher, classmate, peer, friend, parent, or family member as a reason they like the subject. |
-| social agents – negative | `social_agents_negative` | The student blames a teacher, classmate, peer, friend, parent, or family member as a reason they dislike or stopped the subject. |
-| mastery – positive | `mastery_positive` | The student explicitly states they can understand the content well, find it easy, or find challenge satisfying. There must be a direct statement of comprehension or competence — NOT just curiosity or interest in a topic. |
-| mastery – negative | `mastery_negative` | The student explicitly states the content is difficult, confusing, or overwhelming in a way they cannot manage. |
-| self-beliefs – positive | `self_beliefs_positive` | The student identifies with the subject as part of who they are, OR explicitly states they are good at it ("I'm good at it", "it comes naturally", "I've always done well"). NOT the same as finding something easy in the moment — requires identity or stated competence. |
-| self-beliefs – negative | `self_beliefs_negative` | The student explicitly states they are not good at the subject, do not have the skills, or do not see themselves as a "maths/science person". NOT the same as finding something hard — requires identity or stated lack of competence. |
-| uncertain control – negative | `uncertain_control_negative` | The student expresses a persistent, helpless feeling that they cannot improve no matter what they do. Must go beyond simply finding something hard — requires a signal of feeling stuck or giving up (e.g. "no matter how hard I try", "I never improve", "I gave up"). |
-| structural – positive | `structural_positive` | The student likes the subject because of how it is organised, delivered, or assessed — specifically the type of activities (e.g. experiments, practicals), variety of topics, assessment format, or pace. NOT real-world relevance or interesting content. |
-| structural – negative | `structural_negative` | The student dislikes the subject because of how it is organised, delivered, or assessed — specifically activities, content load, assessment format, or pace. NOT just that the content is difficult or irrelevant. |
-| Failure Avoidance – negative | `failure_avoidance_negative` | The student reports feeling stupid, incompetent, or embarrassed specifically because of how they perform or are perceived to perform compared to others. Key signal: shame or social comparison about performance. |
-| anxiety – negative | `anxiety_negative` | The student reports feeling worried, stressed, or anxious about their performance. Key signal: internal emotional distress tied to assessment or performance. NOT the absence of stress. |
+| Code | Definition | Apply when | Do NOT apply when |
+|---|---|---|---|
+| `valuing_positive` | The student expresses the subject is interesting, enjoyable, fun, or useful/relevant to their life or future. Key signal: emotional appreciation or perceived value of the subject itself. | "fun", "interesting", "cool", "I enjoy it", "useful for my career/life", "I like learning about X" | Student says they understand it or find it easy — that is `mastery_positive` |
+| `valuing_negative` | The student expresses the subject is boring, unenjoyable, or pointless/irrelevant. Key signal: emotional dislike or perceived lack of worth. | "boring", "I don't like it", "pointless", "useless", "not interesting", "I never liked it" | Student only mentions difficulty without expressing boredom or disinterest |
+| `social_agents_positive` | The student credits a teacher, classmate, peer, friend, parent, or family member as a reason they like the subject. | "my teacher is great", "my friends like it too", "my parents encouraged me", "good people in my class" | Teacher is mentioned negatively, or student just mentions doing work in a social setting |
+| `social_agents_negative` | The student blames a teacher, classmate, peer, friend, parent, or family member as a reason they dislike or stopped the subject. | "bad teacher", "my teacher doesn't help", "teacher never pays attention", "teacher has no faith in us" | Teacher is mentioned positively or neutrally |
+| `mastery_positive` | The student expresses the subject is challenging in a satisfying way, OR explicitly states they can understand and do the work well. Must be a direct statement of comprehension, competence, or rewarding challenge — not just curiosity or interest in content. | "I understand it", "it makes sense to me", "I find it easy", "satisfying when I solve it", "challenging but I get it", "I grasp concepts quickly", "broadens my understanding", "helps me understand things better" | Student only says content is "interesting" or they "like learning about" a topic — that is `valuing_positive`. Understanding comes from teacher help — that is `social_agents_positive` |
+| `mastery_negative` | The student expresses the subject is difficult, confusing, or overwhelming in a way they cannot manage. Must be a direct statement of difficulty, confusion, or inability to understand. | "too hard", "confusing", "I don't understand it", "complicated", "I can't grasp it" | Do NOT automatically add `uncertain_control_negative` just because something is hard — that requires an additional helplessness signal |
+| `self_beliefs_positive` | The student identifies with the subject as part of who they are, OR explicitly states they are good at it and have the skills to succeed. Key signal: identity or stated competence. | "I'm good at it", "it comes easily to me", "I see myself doing science in the future", "I've always been a maths person", "it comes naturally" | Student finds content interesting or mentions future careers — that is `valuing_positive`. Student says they understand the content — that is `mastery_positive` |
+| `self_beliefs_negative` | The student explicitly states they are not good at the subject, do not have the skills, or do not see themselves as a "maths/science" person. | "I'm not good at it", "it's not my thing", "I've never been a science person", "I used to be good but not anymore", "I can't do it" | Something is hard — that is `mastery_negative`. Self-beliefs requires identity or personal competence, not just difficulty |
+| `uncertain_control_negative` | The student expresses a persistent, helpless feeling they cannot improve no matter what they do — feeling stuck with no sense of how to get better. Goes beyond simply finding something hard. | "no matter how hard I try I can't do it", "I never improve", "I gave up", "I always feel lost", "I can never master it no matter what", "it seems like I never get better" | Student says something is "too hard" or "confusing" — that is `mastery_negative` only. Student says "I don't understand it" without implying helplessness to change that |
+| `structural_positive` | The student likes the subject because of how it is organised, delivered, or assessed — specifically activities (e.g. experiments, practicals), variety of topics, assessment format, or pace. | "I like the experiments", "there's a good variety of topics", "I like how we do practicals", "the pace suits me", "assessment is fair" | Student says subject is relevant to real life — that is `valuing_positive`. Student mentions topics they like — that is `valuing_positive` |
+| `structural_negative` | The student dislikes the subject because of how it is organised, delivered, or assessed — specifically activities, content load, assessment format, or pace. | "too much content", "moves too fast", "only textbook work", "too much memorising", "the way we're tested", "not enough practicals" | Student says content is irrelevant — that is `valuing_negative`. Student says it got harder — that is `mastery_negative` |
+| `failure_avoidance_negative` | The student reports feeling stupid, incompetent, or embarrassed specifically because of how they perform or are perceived to perform compared to others. Key signal: social comparison or shame about performance. | "it makes me feel stupid", "I feel dumb compared to others", "I felt like a failure", "embarrassed I don't do well", "I feel left out because others are better" | Do NOT confuse with `anxiety_negative` — `failure_avoidance_negative` is about shame/embarrassment, `anxiety_negative` is about worry/stress |
+| `anxiety_negative` | The student reports feeling worried, stressed, or anxious about their performance. Key signal: internal emotional distress tied to assessment or performance. | "it stresses me out", "I get anxious about tests", "I worry about failing", "it creates stress", "I feel nervous about it" | Teacher puts pressure on students — look for student's own internal emotional response. Student says subject is NOT stressful — that is absence of anxiety, not presence |
 
 ## Critical Disambiguation Rules
 
@@ -97,11 +97,33 @@ These are the four most common errors — read carefully before coding:
 
 13. **`anxiety_negative`** — *"It creates stress"*
 
-## Edge case handling
+## Edge Case Handling
 
-- If the response is a single word or two words with no clear evaluative statement (e.g. "content", "concepts", "I just don't"), assign the most plausible single code based on question_type context and set `confidence_overall` ≤ 40.
-- If the response cannot be mapped to any code even with question_type context (e.g. "because I'm Asian"), assign `valuing_positive` as fallback and set `confidence_overall` = 25 with a rationale noting it is uncodeable.
-- Never assign more codes than the response supports. When in doubt, assign fewer codes and lower confidence.
+### Responses that are too brief or uninterpretable
+
+Some student responses cannot be reliably coded because they are too vague, too short, or do not map to any motivational construct. These fall into three categories:
+
+**Category 1 — Insufficient Data**
+Single-word or two-word responses with no clear evaluative statement.
+Examples: "content", "concepts", "I just don't", "learning"
+Action: Assign the most plausible single code based on question_type context only. Set `confidence_overall` = 25.
+
+**Category 2 — Ambiguous**
+Responses that could fit two or more codes but evidence is too weak to choose reliably.
+Examples: "classroom experiences", "subject content", "teacher and content"
+Action: Assign the most plausible single code. Set `confidence_overall` = 25.
+Note: these will be self-assigned by a human reviewer — do not force multiple codes.
+
+**Category 3 — Uncodeable**
+Responses that do not map to any motivational construct at all, even with question_type context.
+Examples: "because I'm Asian", "I just don't"
+Action: Assign `valuing_negative` (for negative question types) or `valuing_positive` (for positive question types) as fallback. Set `confidence_overall` = 25. Note in `rationale_short` that the response is uncodeable.
+
+### Important rules for all three categories
+- NEVER force a code with high confidence on a vague response
+- ALWAYS set `confidence_overall` ≤ 25 for these cases
+- ALWAYS note in `rationale_short` that the response is too brief or uncodeable
+- These responses will be reviewed and self-assigned by a human coder — your job is only to flag them correctly with low confidence
 
 ## Confidence Score Rules
 
@@ -109,6 +131,6 @@ These are the four most common errors — read carefully before coding:
 |---|---|
 | Response clearly maps to 1-2 codes | 75–95 |
 | Response maps to codes but is vague | 50–74 |
-| Response is 1-3 words, hard to interpret | ≤ 40 |
+| Response is 1-3 words, hard to interpret | 25 |
 | Response is uncodeable / off-topic | 25 |
 | Fallback code assigned | 25 |

@@ -49,6 +49,24 @@ python evaluation/evaluate.py \
 - Current prompt version: v3.0.0
 - The script stamps each coded row with `prompt_version` so you always know which prompt produced which output
 
+### After every run — update the logs
+
+After every coding run, add a new entry to `logs/coding_runs.md`:
+- Date
+- Dataset name and row count
+- Model and prompt version used
+- Command run
+- Any notes on issues or changes
+
+After every human review, add a new entry to `logs/human_reviews.md`:
+- Date
+- Reviewer name
+- Dataset reviewed
+- Accuracy metrics
+- Any decisions made or issues flagged
+
+This takes 5 minutes and keeps the paper's methods section reproducible.
+
 ## Project Layout
 
 ```
